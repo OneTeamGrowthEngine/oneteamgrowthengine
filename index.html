@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One-Team Growth Engine — the open commercial architecture model</title>
+<meta name="description" content="The One-Team Growth Engine (OTGE) by Jan Bultinck: an open-source maturity model for commercial organizations. 5 pillars × 3 dimensions. Free under CC BY-SA 4.0.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E2A47;        /* blueprint navy */
+    --ink-deep:#081C33;
+    --paper:#F2F6FA;      /* cool paper, not cream */
+    --line:#B9CCDF;       /* drafting line blue */
+    --amber:#E8961E;      /* signal amber accent */
+    --slate:#41566E;
+    --white:#FFFFFF;
+    --radius:6px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{transition:none!important;animation:none!important}}
+  body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;font-size:16px}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;line-height:1.15}
+  a{color:var(--ink)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);font-weight:500}
+  section{padding:88px 0}
+  .btn{display:inline-block;font-family:'Space Grotesk',sans-serif;font-weight:500;text-decoration:none;padding:14px 26px;border-radius:var(--radius);transition:transform .15s ease, box-shadow .15s ease}
+  .btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .btn-solid{background:var(--amber);color:var(--ink-deep)}
+  .btn-line{border:1.5px solid var(--line);color:var(--paper)}
+  .btn:hover{transform:translateY(-1px)}
+
+  /* ---------- HERO ---------- */
+  .hero{background:var(--ink);color:var(--paper);padding:96px 0 110px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(var(--slate) 1px,transparent 1px),linear-gradient(90deg,var(--slate) 1px,transparent 1px);
+    background-size:64px 64px;opacity:.14}
+  .hero .wrap{position:relative}
+  .hero h1{font-size:clamp(38px,6vw,64px);font-weight:700;max-width:15ch;margin:20px 0 8px}
+  .hero h1 em{font-style:normal;color:var(--amber)}
+  .hero .sub{font-size:clamp(17px,2.2vw,20px);max-width:52ch;color:#C6D6E6;margin:18px 0 36px}
+  .hero .actions{display:flex;gap:14px;flex-wrap:wrap}
+  .plate{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8FA9C4;margin-top:56px;display:flex;gap:28px;flex-wrap:wrap}
+  .plate span b{color:var(--paper);font-weight:500}
+
+  /* ---------- MODEL ---------- */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  @media(max-width:820px){.cols{grid-template-columns:1fr}}
+  h2{font-size:clamp(26px,3.6vw,36px);margin:14px 0 18px}
+  .lede{font-size:17px;color:var(--slate);max-width:58ch}
+  .pillars{margin-top:34px;border-top:1.5px solid var(--line)}
+  .pillar-row{display:grid;grid-template-columns:44px 1fr;gap:18px;padding:18px 0;border-bottom:1.5px solid var(--line)}
+  .pillar-row .num{font-family:'IBM Plex Mono',monospace;color:var(--amber);font-size:13px;padding-top:4px}
+  .pillar-row h3{font-size:19px;margin-bottom:4px}
+  .pillar-row p{color:var(--slate);font-size:15px}
+
+  /* ---------- GRID (signature) ---------- */
+  .grid-sec{background:var(--white);border-top:1.5px solid var(--line);border-bottom:1.5px solid var(--line)}
+  .board{display:grid;grid-template-columns:110px repeat(3,1fr);gap:8px;margin-top:36px}
+  .board .corner{background:transparent}
+  .board .head{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);display:flex;align-items:center;justify-content:center;padding:8px 4px}
+  .board .rowlab{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:14px;display:flex;align-items:center;padding-left:2px;color:var(--ink)}
+  .cell{background:var(--paper);border:1.5px solid var(--line);border-radius:var(--radius);min-height:64px;cursor:pointer;padding:10px;font-size:12.5px;color:var(--slate);transition:border-color .15s,background .15s;position:relative;text-align:left;font-family:'Inter',sans-serif}
+  .cell:hover{border-color:var(--amber)}
+  .cell:focus-visible{outline:3px solid var(--amber);outline-offset:1px}
+  .cell.active{border-color:var(--ink);background:#E7EFF7}
+  .cell .score{position:absolute;top:8px;right:10px;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;color:var(--amber)}
+  @media(max-width:640px){.board{grid-template-columns:74px repeat(3,1fr)}.cell{font-size:11px;padding:8px}}
+
+  .detail{margin-top:22px;background:var(--ink);color:var(--paper);border-radius:var(--radius);padding:26px 28px;display:none}
+  .detail.open{display:block}
+  .detail h3{font-size:20px;margin-bottom:4px}
+  .detail .covers{color:#C6D6E6;font-size:14.5px;margin-bottom:18px}
+  .levels{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:720px){.levels{grid-template-columns:1fr}}
+  .lvl{border-left:3px solid var(--slate);padding-left:14px}
+  .lvl.l5{border-color:var(--amber)}
+  .lvl .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8FA9C4;display:block;margin-bottom:6px}
+  .lvl p{font-size:14px;color:#DAE6F1}
+  .scorer{margin-top:22px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .scorer span{font-size:13.5px;color:#C6D6E6;margin-right:4px}
+  .scorer button{width:40px;height:40px;border-radius:var(--radius);border:1.5px solid var(--slate);background:transparent;color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:15px;cursor:pointer;transition:background .12s,border-color .12s}
+  .scorer button:hover{border-color:var(--amber)}
+  .scorer button:focus-visible{outline:3px solid var(--amber);outline-offset:1px}
+  .scorer button.sel{background:var(--amber);border-color:var(--amber);color:var(--ink-deep);font-weight:500}
+
+  /* ---------- FADERS (the mix) ---------- */
+  .mix{margin-top:54px}
+  .mix h3{font-size:20px;margin-bottom:6px}
+  .mix p{color:var(--slate);font-size:15px;max-width:60ch;margin-bottom:30px}
+  .desk{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;max-width:640px}
+  .fader{text-align:center}
+  .track{height:180px;width:6px;background:var(--line);border-radius:3px;margin:0 auto;position:relative}
+  .fill{position:absolute;bottom:0;left:0;width:100%;background:var(--amber);border-radius:3px;transition:height .35s ease}
+  .knob{position:absolute;left:50%;transform:translateX(-50%);width:26px;height:12px;background:var(--ink);border-radius:3px;transition:bottom .35s ease}
+  .fader .flab{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-top:12px}
+  .fader .fval{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;margin-top:2px}
+  @media(max-width:560px){.desk{gap:10px}.track{height:130px}}
+
+  /* ---------- OPEN / SCHEDULE / AUTHOR ---------- */
+  .open-sec .cols{gap:64px}
+  .license-box{border:1.5px solid var(--line);border-radius:var(--radius);padding:26px;background:var(--white)}
+  .license-box .mono{font-size:12px;color:var(--amber);letter-spacing:.12em;text-transform:uppercase}
+  .license-box p{font-size:15px;color:var(--slate);margin-top:10px}
+  .sched{border-top:1.5px solid var(--line);margin-top:34px}
+  .sched-row{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:16px 0;border-bottom:1.5px solid var(--line);font-size:15px}
+  .sched-row .mono{color:var(--amber);font-size:12.5px;padding-top:3px}
+  .sched-row b{font-family:'Space Grotesk',sans-serif;font-weight:500}
+  .sched-row span{color:var(--slate)}
+  @media(max-width:560px){.sched-row{grid-template-columns:1fr;gap:4px}}
+
+  .author{background:var(--ink);color:var(--paper)}
+  .author h2{color:var(--paper)}
+  .author .lede{color:#C6D6E6}
+  .author .credits{font-size:14px;color:#8FA9C4;max-width:66ch;margin-top:26px;border-top:1px solid var(--slate);padding-top:22px}
+  footer{background:var(--ink-deep);color:#8FA9C4;font-size:13px;padding:26px 0}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer a{color:#C6D6E6}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">The One-Team Growth Engine · Open Model v1.0</p>
+    <h1>Growth is not accidental. It is an <em>architecture</em>.</h1>
+    <p class="sub">OTGE is an open maturity model for commercial organizations: 5 pillars × 3 dimensions that show whether your revenue system — people, process, and data across sales, marketing, CS, and operations — is built to grow. Free to use, adapt, and build on.</p>
+    <div class="actions">
+      <a class="btn btn-solid" href="#grid">Explore the model</a>
+      <a class="btn btn-line" href="#open">Read the license &amp; downloads</a>
+    </div>
+    <div class="plate">
+      <span>PILLARS <b>5</b></span>
+      <span>DIMENSIONS <b>3</b></span>
+      <span>CELLS <b>15</b></span>
+      <span>LICENSE <b>CC BY-SA 4.0</b></span>
+      <span>AUTHOR <b>JAN BULTINCK</b></span>
+    </div>
+  </div>
+</header>
+
+<!-- MODEL -->
+<section>
+  <div class="wrap cols">
+    <div>
+      <p class="eyebrow">What it is</p>
+      <h2>A model of the organization around the funnel</h2>
+      <p class="lede">Most frameworks answer one question well. The bow tie answers "how does revenue flow?". MEDDICC answers "is this deal real?". Playing&nbsp;to&nbsp;Win answers "where do we compete?". OTGE answers a different one: <strong>is this organization built to grow?</strong> It sits on top of those models — deliberately compatible, never competing.</p>
+    </div>
+    <div>
+      <div class="pillars">
+        <div class="pillar-row"><span class="num">P1</span><div><h3>Vision</h3><p>Does everyone know where we play, how we win, and why it matters?</p></div></div>
+        <div class="pillar-row"><span class="num">P2</span><div><h3>Language</h3><p>Do we mean the same thing when we say "qualified," "committed," "customer"?</p></div></div>
+        <div class="pillar-row"><span class="num">P3</span><div><h3>Process</h3><p>Does revenue follow a designed, full-lifecycle journey — or a funnel that ends at signature?</p></div></div>
+        <div class="pillar-row"><span class="num">P4</span><div><h3>Rhythm</h3><p>Does execution have a heartbeat — or does the quarter end in a frenzy?</p></div></div>
+        <div class="pillar-row"><span class="num">P5</span><div><h3>Culture</h3><p>Do people own outcomes — and does the system make them better?</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GRID -->
+<section class="grid-sec" id="grid">
+  <div class="wrap">
+    <p class="eyebrow">The maturity grid</p>
+    <h2>Score your organization in 90 minutes</h2>
+    <p class="lede">Each pillar is assessed across People, Process, and Data. Click any cell to see what Chaotic (1), Defined (3), and Engineered (5) look like — then score what is demonstrably true today. No mutual mystification: if you can't show the artifact, it doesn't count.</p>
+
+    <div class="board" role="grid" aria-label="OTGE maturity grid: 5 pillars by 3 dimensions" id="board">
+      <div class="corner"></div>
+      <div class="head">People</div><div class="head">Process</div><div class="head">Data</div>
+    </div>
+
+    <div class="detail" id="detail" aria-live="polite"></div>
+
+    <div class="mix">
+      <h3>The mix</h3>
+      <p>Anyone can own the same tracks — the same CRM, methodology, and talent. What makes the room move is the mix. Your pillar averages appear here as you score; growth leaks at your lowest fader.</p>
+      <div class="desk" id="desk"></div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN -->
+<section class="open-sec" id="open">
+  <div class="wrap cols">
+    <div>
+      <p class="eyebrow">Open by design</p>
+      <h2>The model is free. The craft is the business.</h2>
+      <p class="lede">OTGE is published under Creative Commons BY-SA 4.0: use it commercially, adapt it, extend it — with attribution, and improvements shared under the same license. What I offer commercially is the application: facilitated diagnostics with benchmarking, transformation workshops, keynotes, and hands-on commercial leadership.</p>
+      <div class="license-box" style="margin-top:28px">
+        <span class="mono">CC BY-SA 4.0</span>
+        <p><strong>BY</strong> — credit Jan Bultinck as the author, on every use and adaptation.<br>
+        <strong>SA</strong> — anything you build on the model stays open under the same license.<br>
+        The "One-Team Growth Engine" name and the 5×3 architecture originate with Jan Bultinck.</p>
+      </div>
+      <div class="actions" style="margin-top:26px;display:flex;gap:14px;flex-wrap:wrap">
+        <a class="btn btn-solid" href="#">Download the maturity model (PDF)</a>
+        <a class="btn" style="border:1.5px solid var(--line)" href="#">GitHub repository</a>
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow">Release schedule</p>
+      <h2 style="font-size:24px">One pillar, every two weeks</h2>
+      <div class="sched">
+        <div class="sched-row"><span class="mono">RELEASE 01</span><div><b>The model + maturity grid</b><br><span>The 5×3 architecture, 15-cell scoring model, self-assessment rules.</span></div></div>
+        <div class="sched-row"><span class="mono">RELEASE 02</span><div><b>Vision instruments</b><br><span>Where-to-Play / How-to-Win canvas for commercial teams, North Star template.</span></div></div>
+        <div class="sched-row"><span class="mono">RELEASE 03</span><div><b>Language instruments</b><br><span>Definitions dictionary, stage entry/exit criteria, Upfront Contract template, qualification sheet.</span></div></div>
+        <div class="sched-row"><span class="mono">RELEASE 04</span><div><b>Process instruments</b><br><span>Full-lifecycle journey map (bow-tie compatible), handoff SLA templates.</span></div></div>
+        <div class="sched-row"><span class="mono">RELEASE 05</span><div><b>Rhythm instruments</b><br><span>The complete cadence stack: 1:1s, pipeline, monthly telex, quarterly QBRP.</span></div></div>
+        <div class="sched-row"><span class="mono">RELEASE 06</span><div><b>Culture instruments</b><br><span>Coaching toolbox, incremental-wins tracking, burnout early indicators.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHOR -->
+<section class="author">
+  <div class="wrap cols">
+    <div>
+      <p class="eyebrow">The author</p>
+      <h2>Jan Bultinck</h2>
+      <p class="lede">25+ years of commercial leadership in enterprise software — SAP ecosystems, ERP, supply chain, and manufacturing across Benelux and Europe. Teams from 10 to 150 FTEs, always in transformation. OTGE distills a decade of published thinking into one open architecture.</p>
+      <div class="actions" style="margin-top:26px">
+        <a class="btn btn-solid" href="mailto:jan@bultinck.com">Book a diagnostic or keynote</a>
+        <a class="btn btn-line" href="https://www.linkedin.com/in/janbultinck">Follow on LinkedIn</a>
+      </div>
+    </div>
+    <div>
+      <p class="credits">OTGE builds gratefully on the open work of Jacco van der Kooij / Winning by Design (bow tie, revenue architecture), Roger Martin (Playing to Win), David Sandler (Upfront Contracts), Dave Gray (The Connected Company), John C. Maxwell, Jocko Willink, and Gartner's "Winning in the Turns". Open models stack — this one adds the organizational floor.<br><br>Extend it, translate it, adapt it: share under the same license and tag <span class="mono" style="color:var(--amber)">#OneTeamGrowthEngine</span>. The best contributions get amplified.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© Jan Bultinck BVBA · One-Team Growth Engine™ · Model licensed CC BY-SA 4.0</span>
+    <span><a href="mailto:jan@bultinck.com">jan@bultinck.com</a></span>
+  </div>
+</footer>
+
+<script>
+const PILLARS=["Vision","Language","Process","Rhythm","Culture"];
+const DIMS=["People","Process","Data"];
+const CELLS=[
+ // Vision
+ [{c:"Can individuals across functions articulate the ambition and their part in it?",l1:"Ask five people where the company is going commercially; get five answers.",l3:"A written Where-to-Play / How-to-Win exists; every commercial role can state segments, differentiation, and their contribution.",l5:"The vision filters decisions at every level — teams say no to off-strategy deals without leadership present."},
+  {c:"Is strategy an operating process or an annual slide ritual?",l1:"\u201CStrategy\u201D is a Q4 budget exercise; planning is mistaken for strategy.",l3:"A strategy cascade exists and is revisited quarterly against explicit assumptions.",l5:"Wrong assumption vs. poor execution is distinguished in every review; reallocation happens within the quarter."},
+  {c:"Is the ambition quantified and falsifiable?",l1:"Targets are last year plus an ambition percentage nobody can trace.",l3:"The target decomposes into segments, motions, and inspectable assumptions — a formula, not a wish.",l5:"A living market model triggers pre-built scenario switches when signals deviate."}],
+ // Language
+ [{c:"Shared vocabulary across functions — the end of mutual mystification.",l1:"\u201CQualified\u201D, \u201Ccommit\u201D and \u201Cchurn risk\u201D mean different things per team.",l3:"A shared definitions dictionary (ICP, stage criteria, qualification standard) is in daily use.",l5:"Customers speak the same outcome language; new tools must adopt the dictionary before rollout."},
+  {c:"Do interactions follow shared contracts?",l1:"Meetings without purpose, agenda, or agreed outcome; handoffs are informal and lossy.",l3:"Upfront Contracts are standard; internal handoffs have documented, signed entry/exit criteria.",l5:"Contract discipline is self-enforcing — deals cannot advance without the defined evidence."},
+  {c:"Are definitions encoded in systems so data means one thing?",l1:"CRM is a pile of records; reports are contested before they're discussed.",l3:"Definitions enforced in the CRM; one source of truth; debates are about conclusions.",l5:"Data quality is monitored automatically; the dictionary and the schema are the same document."}],
+ // Process
+ [{c:"Do roles map to the customer journey, including after the deal?",l1:"Sales owns everything until signature, then throws the customer over the wall.",l3:"Named owners across the full bow tie — acquisition AND adoption, retention, expansion.",l5:"Resources flex to where the bow-tie data says growth is moving, without reorganization trauma."},
+  {c:"The design quality of the journey itself.",l1:"A linear seller-side funnel that ends at signature; the buyer's looping journey is ignored.",l3:"A documented full-lifecycle journey with playbooks and buyer-enablement artifacts per stage.",l5:"The journey is a versioned product: instrumented, improved on a release cadence."},
+  {c:"Is the journey measured as a system of conversion and velocity?",l1:"The only number is bookings; nobody knows where deals stall or why customers churn.",l3:"Bow-tie metrics per stage on both sides — CAC, LTV, NRR — balanced on Quality / Growth / Efficiency.",l5:"The data model predicts the ARR impact of a conversion change three quarters out."}],
+ // Rhythm
+ [{c:"The cadence of human attention — 1:1s, coaching, development.",l1:"1:1s happen when there's a problem; burnout is discovered at resignation.",l3:"Weekly 1:1s separate from pipeline; skills are coached, not just outcomes; burnout indicators watched.",l5:"Coaching is peer-to-peer and self-sustaining; the cadence survives leadership changes."},
+  {c:"The operating cadence of the commercial system.",l1:"The quarter is a sprint that starts in month three — discount-heavy closing frenzy.",l3:"A defined cadence stack runs: weekly pipeline, monthly telex, quarterly QBRP with rolling reverse-pipeline view.",l5:"Quarter-end distortion is measurably absent; the rhythm adapts tempo to market turns."},
+  {c:"Is forecasting a continuous instrument or a backward ritual?",l1:"Forecast = pipeline × hope, assembled the night before the board meeting.",l3:"A rolling forecast on maintained data; forecast meetings double as enablement moments.",l5:"Leading indicators flag at week 2 what the quarter will miss at week 12; pre-built plays trigger."}],
+ // Culture
+ [{c:"Trust, ownership, authenticity, psychological safety.",l1:"Fear-based management, hero worship, information hoarding.",l3:"Extreme ownership is the norm; feedback flows both ways; selling is authentic — no tricks.",l5:"Purpose is the fuel; the culture develops leaders faster than the org can absorb them."},
+  {c:"Are values embedded in how work actually runs?",l1:"Values live on a poster; comp rewards exactly what the values condemn.",l3:"Incentives and promotion visibly reward team play, customer outcomes, and skill growth.",l5:"The culture self-corrects: incentive drift is flagged and fixed without escalation."},
+  {c:"Is the human system measured as seriously as the revenue system?",l1:"The only people-metric is quota attainment.",l3:"Engagement, mobility, skill progression, and burnout indicators reviewed like pipeline.",l5:"Coaching investment provably moves win rates; leadership attention follows the data."}]
+];
+const scores=Array.from({length:5},()=>[null,null,null]);
+const board=document.getElementById('board');
+const detail=document.getElementById('detail');
+let active=null;
+
+PILLARS.forEach((p,pi)=>{
+  const lab=document.createElement('div');lab.className='rowlab';lab.textContent=p;board.appendChild(lab);
+  DIMS.forEach((d,di)=>{
+    const b=document.createElement('button');
+    b.className='cell';b.setAttribute('role','gridcell');
+    b.setAttribute('aria-label',p+' × '+d);
+    b.innerHTML='<span class="score" data-s></span>'+p+' × '+d;
+    b.addEventListener('click',()=>openCell(pi,di,b));
+    board.appendChild(b);
+  });
+});
+
+function openCell(pi,di,btn){
+  document.querySelectorAll('.cell').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');active={pi,di,btn};
+  const c=CELLS[pi][di];
+  detail.className='detail open';
+  detail.innerHTML=
+   '<h3>'+PILLARS[pi]+' × '+DIMS[di]+'</h3>'+
+   '<p class="covers">'+c.c+'</p>'+
+   '<div class="levels">'+
+     '<div class="lvl"><span class="tag">1 · Chaotic</span><p>'+c.l1+'</p></div>'+
+     '<div class="lvl"><span class="tag">3 · Defined</span><p>'+c.l3+'</p></div>'+
+     '<div class="lvl l5"><span class="tag">5 · Engineered</span><p>'+c.l5+'</p></div>'+
+   '</div>'+
+   '<div class="scorer"><span>Your score:</span>'+[1,2,3,4,5].map(n=>'<button data-n="'+n+'" aria-label="Score '+n+'">'+n+'</button>').join('')+'</div>';
+  detail.querySelectorAll('.scorer button').forEach(sb=>{
+    const n=+sb.dataset.n;
+    if(scores[pi][di]===n)sb.classList.add('sel');
+    sb.addEventListener('click',()=>{scores[pi][di]=n;
+      detail.querySelectorAll('.scorer button').forEach(x=>x.classList.remove('sel'));
+      sb.classList.add('sel');
+      btn.querySelector('[data-s]').textContent=n;
+      renderDesk();});
+  });
+}
+
+const desk=document.getElementById('desk');
+function renderDesk(){
+  desk.innerHTML='';
+  PILLARS.forEach((p,pi)=>{
+    const vals=scores[pi].filter(v=>v!==null);
+    const avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;
+    const pct=avg/5*100;
+    const f=document.createElement('div');f.className='fader';
+    f.innerHTML='<div class="track"><div class="fill" style="height:'+pct+'%"></div><div class="knob" style="bottom:calc('+pct+'% - 6px)"></div></div>'+
+      '<div class="flab">'+p+'</div><div class="fval">'+(vals.length?avg.toFixed(1):'–')+'</div>';
+    desk.appendChild(f);
+  });
+}
+renderDesk();
+</script>
+</body>
+</html>
