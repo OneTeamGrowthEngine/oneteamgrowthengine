@@ -155,7 +155,7 @@
     <div>
       <div class="pillars">
         <div class="pillar-row"><span class="num">P1</span><div><h3>Vision</h3><p>Does everyone know where we play, how we win, and why it matters?</p></div></div>
-        <div class="pillar-row"><span class="num">P2</span><div><h3>Language</h3><p>Do we mean the same thing when we say "qualified," "committed," "customer"?</p></div></div>
+        <div class="pillar-row"><span class="num">P2</span><div><h3><a href="language/" style="text-decoration:none">Language <span style="color:var(--amber);font-size:14px">→ deep-dive live</span></a></h3><p>Do we mean the same thing when we say "qualified," "committed," "customer"?</p></div></div>
         <div class="pillar-row"><span class="num">P3</span><div><h3>Process</h3><p>Does revenue follow a designed, full-lifecycle journey — or a funnel that ends at signature?</p></div></div>
         <div class="pillar-row"><span class="num">P4</span><div><h3>Rhythm</h3><p>Does execution have a heartbeat — or does the quarter end in a frenzy?</p></div></div>
         <div class="pillar-row"><span class="num">P5</span><div><h3>Culture</h3><p>Do people own outcomes — and does the system make them better?</p></div></div>
@@ -208,9 +208,9 @@
       <p class="eyebrow">Release schedule</p>
       <h2 style="font-size:24px">One pillar, every two weeks</h2>
       <div class="sched">
-        <div class="sched-row"><span class="mono">RELEASE 01</span><div><<div class="sched-row"><span class="mono">RELEASE 01 · LIVE</span><div><b><a href="OTGE-Maturity-Model-v1.0.pdf" download style="color:var(--amber)">The model + maturity grid — download (PDF)</a></b><br><span>The 5×3 architecture, 15-cell scoring model, self-assessment rules.</span></div></div>
+        <div class="sched-row"><span class="mono">RELEASE 01 · LIVE</span><div><b><a href="OTGE-Maturity-Model-v1.0.pdf" download style="color:var(--amber)">The model + maturity grid — download (PDF)</a></b><br><span>The 5×3 architecture, 15-cell scoring model, self-assessment rules.</span></div></div>
         <div class="sched-row"><span class="mono">RELEASE 02 · LIVE</span><div><b><a href="instruments/vision/OTGE-Vision-Instrument-v1.0.xlsx" download style="color:var(--amber)">Vision instruments — download the workbook (.xlsx)</a></b><br><span>Where-to-Play / How-to-Win canvas → Ansoff income model → number cascading with NRR → ROA. Bow-tie compatible.</span></div></div>
-        <div class="sched-row"><span class="mono">RELEASE 03</span><div><b>Language instruments</b><br><span>Definitions dictionary, stage entry/exit criteria, Upfront Contract template, qualification sheet.</span></div></div>
+        <div class="sched-row"><span class="mono">RELEASE 03 · LIVE</span><div><b><a href="language/" style="color:var(--amber)">Language — read the deep-dive</a> · <a href="instruments/language/OTGE-Language-Instrument-v1.0.xlsx" download style="color:var(--amber)">workbook (.xlsx)</a> · <a href="instruments/language/OTGE-Commercial-Dictionary-Template-v1.0.pdf" download style="color:var(--amber)">one-pager (PDF)</a></b><br><span>Commercial Dictionary, term audit, customer-verifiable stage exit criteria on the bow tie, forecast taxonomy, adoption ROA.</span></div></div>
         <div class="sched-row"><span class="mono">RELEASE 04</span><div><b>Process instruments</b><br><span>Full-lifecycle journey map (bow-tie compatible), handoff SLA templates.</span></div></div>
         <div class="sched-row"><span class="mono">RELEASE 05</span><div><b>Rhythm instruments</b><br><span>The complete cadence stack: 1:1s, pipeline, monthly telex, quarterly QBRP.</span></div></div>
         <div class="sched-row"><span class="mono">RELEASE 06</span><div><b>Culture instruments</b><br><span>Coaching toolbox, incremental-wins tracking, burnout early indicators.</span></div></div>
@@ -269,6 +269,7 @@ const CELLS=[
   {c:"Are values embedded in how work actually runs?",l1:"Values live on a poster; comp rewards exactly what the values condemn.",l3:"Incentives and promotion visibly reward team play, customer outcomes, and skill growth.",l5:"The culture self-corrects: incentive drift is flagged and fixed without escalation."},
   {c:"Is the human system measured as seriously as the revenue system?",l1:"The only people-metric is quota attainment.",l3:"Engagement, mobility, skill progression, and burnout indicators reviewed like pipeline.",l5:"Coaching investment provably moves win rates; leadership attention follows the data."}]
 ];
+const PAGES={1:"language/"}; // add future pillars here, e.g. 2:"process/"
 const scores=Array.from({length:5},()=>[null,null,null]);
 const board=document.getElementById('board');
 const detail=document.getElementById('detail');
@@ -299,7 +300,8 @@ function openCell(pi,di,btn){
      '<div class="lvl"><span class="tag">3 · Defined</span><p>'+c.l3+'</p></div>'+
      '<div class="lvl l5"><span class="tag">5 · Engineered</span><p>'+c.l5+'</p></div>'+
    '</div>'+
-   '<div class="scorer"><span>Your score:</span>'+[1,2,3,4,5].map(n=>'<button data-n="'+n+'" aria-label="Score '+n+'">'+n+'</button>').join('')+'</div>';
+   '<div class="scorer"><span>Your score:</span>'+[1,2,3,4,5].map(n=>'<button data-n="'+n+'" aria-label="Score '+n+'">'+n+'</button>').join('')+'</div>'+
+   (PAGES[pi]?'<p style="margin-top:18px;font-size:14px"><a href="'+PAGES[pi]+'" style="color:var(--amber)">Read the '+PILLARS[pi]+' deep-dive + free instruments →</a></p>':'');
   detail.querySelectorAll('.scorer button').forEach(sb=>{
     const n=+sb.dataset.n;
     if(scores[pi][di]===n)sb.classList.add('sel');
