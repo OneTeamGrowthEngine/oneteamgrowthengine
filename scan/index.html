@@ -1,1 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The OTGE Scan — score your commercial architecture</title>
+<meta name="description" content="A free 15-question self-assessment of your commercial organization across the five pillars of the One-Team Growth Engine. No sign-up. Get your maturity map in ten minutes.">
+<link rel="canonical" href="https://oneteamgrowthengine.com/scan/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The OTGE Scan — is your revenue engine built to scale, or just running on luck?">
+<meta property="og:description" content="Fifteen questions. Ten minutes. A free maturity map of your commercial organization across People, Process and Data.">
+<meta property="og:url" content="https://oneteamgrowthengine.com/scan/">
+<meta property="og:image" content="https://oneteamgrowthengine.com/assets/og-scan.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E2A47;        /* blueprint navy */
+    --ink-deep:#081C33;
+    --paper:#F2F6FA;      /* cool paper, not cream */
+    --line:#B9CCDF;       /* drafting line blue */
+    --amber:#E8961E;      /* signal amber accent */
+    --slate:#41566E;
+    --white:#FFFFFF;
+    --radius:6px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{transition:none!important;animation:none!important}}
+  body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;font-size:16px}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;line-height:1.15}
+  a{color:var(--ink)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);font-weight:500}
+  section{padding:88px 0}
+  .btn{display:inline-block;font-family:'Space Grotesk',sans-serif;font-weight:500;text-decoration:none;padding:14px 26px;border-radius:var(--radius);transition:transform .15s ease, box-shadow .15s ease}
+  .btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+  .btn-solid{background:var(--amber);color:var(--ink-deep)}
+  .btn-line{border:1.5px solid var(--line);color:var(--paper)}
+  .btn:hover{transform:translateY(-1px)}
+
+  /* ---------- HERO ---------- */
+  .hero{background:var(--ink);color:var(--paper);padding:96px 0 110px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(var(--slate) 1px,transparent 1px),linear-gradient(90deg,var(--slate) 1px,transparent 1px);
+    background-size:64px 64px;opacity:.14}
+  .hero .wrap{position:relative}
+  .hero h1{font-size:clamp(38px,6vw,64px);font-weight:700;max-width:15ch;margin:20px 0 8px}
+  .hero h1 em{font-style:normal;color:var(--amber)}
+  .hero .sub{font-size:clamp(17px,2.2vw,20px);max-width:52ch;color:#C6D6E6;margin:18px 0 36px}
+  .hero .actions{display:flex;gap:14px;flex-wrap:wrap}
+  .plate{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8FA9C4;margin-top:56px;display:flex;gap:28px;flex-wrap:wrap}
+  .plate span b{color:var(--paper);font-weight:500}
+
+  /* ---------- MODEL ---------- */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  @media(max-width:820px){.cols{grid-template-columns:1fr}}
+  h2{font-size:clamp(26px,3.6vw,36px);margin:14px 0 18px}
+  .lede{font-size:17px;color:var(--slate);max-width:58ch}
+  .pillars{margin-top:34px;border-top:1.5px solid var(--line)}
+  .pillar-row{display:grid;grid-template-columns:44px 1fr;gap:18px;padding:18px 0;border-bottom:1.5px solid var(--line)}
+  .pillar-row .num{font-family:'IBM Plex Mono',monospace;color:var(--amber);font-size:13px;padding-top:4px}
+  .pillar-row h3{font-size:19px;margin-bottom:4px}
+  .pillar-row p{color:var(--slate);font-size:15px}
+
+  /* ---------- GRID (signature) ---------- */
+  .grid-sec{background:var(--white);border-top:1.5px solid var(--line);border-bottom:1.5px solid var(--line)}
+  .board{display:grid;grid-template-columns:110px repeat(3,1fr);gap:8px;margin-top:36px}
+  .board .corner{background:transparent}
+  .board .head{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);display:flex;align-items:center;justify-content:center;padding:8px 4px}
+  .board .rowlab{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:14px;display:flex;align-items:center;padding-left:2px;color:var(--ink)}
+  .cell{background:var(--paper);border:1.5px solid var(--line);border-radius:var(--radius);min-height:64px;cursor:pointer;padding:10px;font-size:12.5px;color:var(--slate);transition:border-color .15s,background .15s;position:relative;text-align:left;font-family:'Inter',sans-serif}
+  .cell:hover{border-color:var(--amber)}
+  .cell:focus-visible{outline:3px solid var(--amber);outline-offset:1px}
+  .cell.active{border-color:var(--ink);background:#E7EFF7}
+  .cell .score{position:absolute;top:8px;right:10px;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;color:var(--amber)}
+  @media(max-width:640px){.board{grid-template-columns:74px repeat(3,1fr)}.cell{font-size:11px;padding:8px}}
+
+  .detail{margin-top:22px;background:var(--ink);color:var(--paper);border-radius:var(--radius);padding:26px 28px;display:none}
+  .detail.open{display:block}
+  .detail h3{font-size:20px;margin-bottom:4px}
+  .detail .covers{color:#C6D6E6;font-size:14.5px;margin-bottom:18px}
+  .levels{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:720px){.levels{grid-template-columns:1fr}}
+  .lvl{border-left:3px solid var(--slate);padding-left:14px}
+  .lvl.l5{border-color:var(--amber)}
+  .lvl .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8FA9C4;display:block;margin-bottom:6px}
+  .lvl p{font-size:14px;color:#DAE6F1}
+  .scorer{margin-top:22px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .scorer span{font-size:13.5px;color:#C6D6E6;margin-right:4px}
+  .scorer button{width:40px;height:40px;border-radius:var(--radius);border:1.5px solid var(--slate);background:transparent;color:var(--paper);font-family:'IBM Plex Mono',monospace;font-size:15px;cursor:pointer;transition:background .12s,border-color .12s}
+  .scorer button:hover{border-color:var(--amber)}
+  .scorer button:focus-visible{outline:3px solid var(--amber);outline-offset:1px}
+  .scorer button.sel{background:var(--amber);border-color:var(--amber);color:var(--ink-deep);font-weight:500}
+
+  /* ---------- FADERS (the mix) ---------- */
+  .mix{margin-top:54px}
+  .mix h3{font-size:20px;margin-bottom:6px}
+  .mix p{color:var(--slate);font-size:15px;max-width:60ch;margin-bottom:30px}
+  .desk{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;max-width:640px}
+  .fader{text-align:center}
+  .track{height:180px;width:6px;background:var(--line);border-radius:3px;margin:0 auto;position:relative}
+  .fill{position:absolute;bottom:0;left:0;width:100%;background:var(--amber);border-radius:3px;transition:height .35s ease}
+  .knob{position:absolute;left:50%;transform:translateX(-50%);width:26px;height:12px;background:var(--ink);border-radius:3px;transition:bottom .35s ease}
+  .fader .flab{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-top:12px}
+  .fader .fval{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;margin-top:2px}
+  @media(max-width:560px){.desk{gap:10px}.track{height:130px}}
+
+  /* ---------- OPEN / SCHEDULE / AUTHOR ---------- */
+  .open-sec .cols{gap:64px}
+  .license-box{border:1.5px solid var(--line);border-radius:var(--radius);padding:26px;background:var(--white)}
+  .license-box .mono{font-size:12px;color:var(--amber);letter-spacing:.12em;text-transform:uppercase}
+  .license-box p{font-size:15px;color:var(--slate);margin-top:10px}
+  .sched{border-top:1.5px solid var(--line);margin-top:34px}
+  .sched-row{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:16px 0;border-bottom:1.5px solid var(--line);font-size:15px}
+  .sched-row .mono{color:var(--amber);font-size:12.5px;padding-top:3px}
+  .sched-row b{font-family:'Space Grotesk',sans-serif;font-weight:500}
+  .sched-row span{color:var(--slate)}
+  @media(max-width:560px){.sched-row{grid-template-columns:1fr;gap:4px}}
+
+  .author{background:var(--ink);color:var(--paper)}
+  .author h2{color:var(--paper)}
+  .author .lede{color:#C6D6E6}
+  .author .credits{font-size:14px;color:#8FA9C4;max-width:66ch;margin-top:26px;border-top:1px solid var(--slate);padding-top:22px}
+  footer{background:var(--ink-deep);color:#8FA9C4;font-size:13px;padding:26px 0}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  footer a{color:#C6D6E6}
+</style>
+<style>
+  .scanwrap{max-width:820px;margin:0 auto;padding:0 24px}
+  .progress{position:sticky;top:0;z-index:20;background:var(--paper);padding:14px 0 10px;border-bottom:1.5px solid var(--line)}
+  .pbar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+  .pfill{height:100%;width:0;background:var(--amber);transition:width .3s ease}
+  .pmeta{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--slate);margin-top:8px}
+  .qcard{background:var(--white);border:1.5px solid var(--line);border-radius:var(--radius);padding:30px 30px 26px;margin-top:26px}
+  .qcard .pill{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber)}
+  .qcard h2{font-size:clamp(20px,2.6vw,25px);margin:8px 0 22px;line-height:1.25}
+  .levels-q{display:grid;gap:12px}
+  .lvlopt{text-align:left;border:1.5px solid var(--line);border-radius:var(--radius);background:var(--paper);padding:14px 16px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);line-height:1.5;transition:border-color .12s,background .12s;display:flex;gap:14px;align-items:flex-start}
+  .lvlopt:hover{border-color:var(--amber)}
+  .lvlopt:focus-visible{outline:3px solid var(--amber);outline-offset:1px}
+  .lvlopt.sel{border-color:var(--ink);background:#E7EFF7}
+  .lvlopt .lv{font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--amber);flex:0 0 auto;padding-top:1px}
+  .lvlopt .lt{flex:0 0 84px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);padding-top:2px}
+  .between{font-size:13px;color:var(--slate);font-style:italic;padding:2px 0 2px 2px}
+  .navrow{display:flex;justify-content:space-between;margin-top:22px;gap:12px}
+  .navrow button{font-family:'Space Grotesk',sans-serif;font-weight:500;padding:12px 22px;border-radius:var(--radius);cursor:pointer;border:1.5px solid var(--line);background:transparent;color:var(--ink)}
+  .navrow button:disabled{opacity:.4;cursor:not-allowed}
+  .navrow .next{background:var(--amber);border-color:var(--amber);color:var(--ink-deep)}
+  /* results */
+  .result{display:none}
+  .result.on{display:block}
+  .scanner{display:none}
+  .verdict{background:var(--ink);color:var(--paper);border-radius:var(--radius);padding:34px;margin-top:26px;text-align:center}
+  .verdict .big{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:56px;color:var(--amber);line-height:1}
+  .verdict .lab{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#8FA9C4;margin-top:10px}
+  .verdict h2{font-size:26px;margin:16px 0 8px}
+  .verdict p{color:#C6D6E6;max-width:56ch;margin:0 auto;font-size:15px}
+  .rgrid{display:grid;grid-template-columns:120px repeat(3,1fr);gap:8px;margin:30px 0}
+  .rgrid .h{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);display:flex;align-items:center;justify-content:center;padding:6px 2px;text-align:center}
+  .rgrid .rl{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:13px;display:flex;align-items:center;color:var(--ink)}
+  .rcell{border-radius:var(--radius);min-height:52px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--white)}
+  @media(max-width:620px){.rgrid{grid-template-columns:72px repeat(3,1fr)}.rl{font-size:11px}.verdict .big{font-size:44px}}
+  .wins{margin-top:14px}
+  .win{background:var(--white);border:1.5px solid var(--line);border-left:4px solid var(--amber);border-radius:var(--radius);padding:18px 20px;margin-bottom:12px}
+  .win .wtag{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+  .win h3{font-size:17px;margin:5px 0 6px}
+  .win p{font-size:14px;color:var(--slate);margin:0 0 8px}
+  .win a{font-size:13px;font-family:'Space Grotesk',sans-serif;color:var(--ink);text-decoration-color:var(--amber);text-decoration-thickness:2px}
+  .pillarbars{margin-top:12px}
+  .pbrow{display:grid;grid-template-columns:120px 1fr 44px;gap:12px;align-items:center;margin-bottom:10px}
+  .pbrow .nm{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:14px}
+  .track{height:12px;background:var(--line);border-radius:6px;overflow:hidden}
+  .trackf{height:100%;background:var(--ink);border-radius:6px}
+  .pbrow .sc{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--slate);text-align:right}
+  .cta-final{background:var(--ink);color:var(--paper);border-radius:var(--radius);padding:30px;margin-top:26px}
+  .cta-final h2{color:var(--paper);font-size:22px;margin-bottom:10px}
+  .cta-final p{color:#C6D6E6;font-size:15px;max-width:60ch}
+  .cta-final .btns{margin-top:20px;display:flex;gap:12px;flex-wrap:wrap}
+  .disclaimer{font-size:12.5px;color:var(--slate);margin-top:20px;font-style:italic}
+  .startcard{background:var(--white);border:1.5px solid var(--line);border-radius:var(--radius);padding:32px;margin-top:26px}
+  .startcard ul{margin:14px 0 0 18px;color:var(--slate);font-size:15px}
+  .startcard li{margin-bottom:7px}
+</style>
+</head>
+<body>
+
+<header class="hero" style="padding:56px 0 44px">
+  <div class="wrap">
+    <p class="crumb"><a href="../">&larr; One-Team Growth Engine</a></p>
+    <p class="eyebrow">The OTGE Scan</p>
+    <h1 style="max-width:20ch">Is your revenue engine built to scale &mdash; or just running on <em>luck</em>?</h1>
+    <p class="sub" style="max-width:52ch">Fifteen questions across the five pillars. Ten minutes. A maturity map of your commercial organization &mdash; and where your fastest wins are. No sign-up, nothing to install, nothing leaves your browser.</p>
+  </div>
+</header>
+
+<section style="padding:36px 0 80px">
+  <div class="scanwrap">
+
+    <!-- INTRO -->
+    <div id="intro">
+      <div class="startcard">
+        <p class="eyebrow" style="color:var(--amber)">Before you start</p>
+        <h2 style="font-family:'Space Grotesk';font-size:22px;margin:8px 0 6px">Score what is demonstrably true &mdash; not what you hope is true.</h2>
+        <p style="color:var(--slate);font-size:15px">For each of the 15 questions you'll pick the description that best matches your organization today. A simple rule keeps you honest:</p>
+        <ul>
+          <li><b>If you can't show the artifact, it doesn't count.</b> "We have a shared definition of "qualified"" only counts if it's written down and used.</li>
+          <li>Answer for the organization as it actually operates on a normal Tuesday &mdash; not on its best day.</li>
+          <li>Your answers stay in your browser. There's no account, no tracking, no send.</li>
+        </ul>
+        <div class="navrow" style="justify-content:flex-end">
+          <button class="next" onclick="start()">Start the scan &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUESTION FLOW -->
+    <div id="flow" style="display:none">
+      <div class="progress">
+        <div class="pbar"><div class="pfill" id="pfill"></div></div>
+        <div class="pmeta"><span id="pmeta-pillar">Vision</span><span id="pmeta-count">1 / 15</span></div>
+      </div>
+      <div class="qcard" id="qcard"></div>
+      <div class="navrow">
+        <button id="backbtn" onclick="back()">&larr; Back</button>
+        <button class="next" id="nextbtn" onclick="next()" disabled>Next &rarr;</button>
+      </div>
+      <p class="disclaimer">This is a self-assessment for reflection and orientation, not an audit or a guarantee of outcomes. It tells you where to look first &mdash; the work itself is human.</p>
+    </div>
+
+    <!-- RESULTS -->
+    <div id="result" class="result">
+      <div class="verdict">
+        <div class="big" id="totalScore">&ndash;</div>
+        <div class="lab">out of 75 &middot; <span id="stageLabel"></span></div>
+        <h2 id="verdictHead"></h2>
+        <p id="verdictBody"></p>
+      </div>
+
+      <h2 style="font-family:'Space Grotesk';font-size:22px;margin:34px 0 4px">Your map</h2>
+      <p style="color:var(--slate);font-size:14px;margin-bottom:4px">Each cell scored 1&ndash;5. Darker amber is stronger. This is the same 15-cell grid the whole framework is built on.</p>
+      <div class="rgrid" id="rgrid"></div>
+
+      <h2 style="font-family:'Space Grotesk';font-size:22px;margin:30px 0 4px">By pillar</h2>
+      <div class="pillarbars" id="pillarbars"></div>
+
+      <h2 style="font-family:'Space Grotesk';font-size:22px;margin:30px 0 4px">Your three fastest wins</h2>
+      <p style="color:var(--slate);font-size:14px;margin-bottom:10px">The lowest-scoring cells &mdash; where a small, deliberate move changes the most. Each links to the free instrument that addresses it.</p>
+      <div class="wins" id="wins"></div>
+
+      <div class="cta-final">
+        <h2>Turn the map into movement</h2>
+        <p>The instruments above are free &mdash; take them and run. If you'd rather do it in a room, with your own people and an outside eye, that's what a facilitated Sprint is for: your team scores itself against the evidence, the gaps become a plan, and the plan has owners.</p>
+        <div class="btns">
+          <a class="btn btn-solid" href="mailto:jan@oneteamgrowthengine.com?subject=OTGE%20Scan%20%E2%80%94%20let's%20talk">Talk about a Sprint</a>
+          <a class="btn" style="border:1.5px solid #41566E;color:var(--paper)" href="#" onclick="restart();return false;">Retake the scan</a>
+        </div>
+      </div>
+      <p class="disclaimer">Your score lives only in this browser session. Screenshot the map if you'd like to keep it or share it with your team.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; Jan Bultinck BVBA &middot; One-Team Growth Engine&trade; &middot; Model licensed CC BY-SA 4.0 &middot; Self-assessment for orientation, not an audit</span>
+    <span><a href="mailto:jan@oneteamgrowthengine.com">jan@oneteamgrowthengine.com</a></span>
+  </div>
+</footer>
+
+<script>
+const CELLS=[// Vision
+ [{c:"Can individuals across functions articulate the ambition and their part in it?",l1:"Ask five people where the company is going commercially; get five answers.",l3:"A written Where-to-Play / How-to-Win exists; every commercial role can state segments, differentiation, and their contribution.",l5:"The vision filters decisions at every level — teams say no to off-strategy deals without leadership present."},
+  {c:"Is strategy an operating process or an annual slide ritual?",l1:"\u201CStrategy\u201D is a Q4 budget exercise; planning is mistaken for strategy.",l3:"A strategy cascade exists and is revisited quarterly against explicit assumptions.",l5:"Wrong assumption vs. poor execution is distinguished in every review; reallocation happens within the quarter."},
+  {c:"Is the ambition quantified and falsifiable?",l1:"Targets are last year plus an ambition percentage nobody can trace.",l3:"The target decomposes into segments, motions, and inspectable assumptions — a formula, not a wish.",l5:"A living market model triggers pre-built scenario switches when signals deviate."}],
+ // Language
+ [{c:"Shared vocabulary across functions — the end of mutual mystification.",l1:"\u201CQualified\u201D, \u201Ccommit\u201D and \u201Cchurn risk\u201D mean different things per team.",l3:"A shared definitions dictionary (ICP, stage criteria, qualification standard) is in daily use.",l5:"Customers speak the same outcome language; new tools must adopt the dictionary before rollout."},
+  {c:"Do interactions follow shared contracts?",l1:"Meetings without purpose, agenda, or agreed outcome; handoffs are informal and lossy.",l3:"Upfront Contracts are standard; internal handoffs have documented, signed entry/exit criteria.",l5:"Contract discipline is self-enforcing — deals cannot advance without the defined evidence."},
+  {c:"Are definitions encoded in systems so data means one thing?",l1:"CRM is a pile of records; reports are contested before they're discussed.",l3:"Definitions enforced in the CRM; one source of truth; debates are about conclusions.",l5:"Data quality is monitored automatically; the dictionary and the schema are the same document."}],
+ // Process
+ [{c:"Do roles map to the customer journey, including after the deal?",l1:"Sales owns everything until signature, then throws the customer over the wall.",l3:"Named owners across the full bow tie — acquisition AND adoption, retention, expansion.",l5:"Resources flex to where the bow-tie data says growth is moving, without reorganization trauma."},
+  {c:"The design quality of the journey itself.",l1:"A linear seller-side funnel that ends at signature; the buyer's looping journey is ignored.",l3:"A documented full-lifecycle journey with playbooks and buyer-enablement artifacts per stage.",l5:"The journey is a versioned product: instrumented, improved on a release cadence."},
+  {c:"Is the journey measured as a system of conversion and velocity?",l1:"The only number is bookings; nobody knows where deals stall or why customers churn.",l3:"Bow-tie metrics per stage on both sides — CAC, LTV, NRR — balanced on Quality / Growth / Efficiency.",l5:"The data model predicts the ARR impact of a conversion change three quarters out."}],
+ // Rhythm
+ [{c:"The cadence of human attention — 1:1s, coaching, development.",l1:"1:1s happen when there's a problem; burnout is discovered at resignation.",l3:"Weekly 1:1s separate from pipeline; skills are coached, not just outcomes; burnout indicators watched.",l5:"Coaching is peer-to-peer and self-sustaining; the cadence survives leadership changes."},
+  {c:"The operating cadence of the commercial system.",l1:"The quarter is a sprint that starts in month three — discount-heavy closing frenzy.",l3:"A defined cadence stack runs: weekly pipeline, monthly telex, quarterly QBRP with rolling reverse-pipeline view.",l5:"Quarter-end distortion is measurably absent; the rhythm adapts tempo to market turns."},
+  {c:"Is forecasting a continuous instrument or a backward ritual?",l1:"Forecast = pipeline × hope, assembled the night before the board meeting.",l3:"A rolling forecast on maintained data; forecast meetings double as enablement moments.",l5:"Leading indicators flag at week 2 what the quarter will miss at week 12; pre-built plays trigger."}],
+ // Culture
+ [{c:"Trust, ownership, authenticity, psychological safety.",l1:"Fear-based management, hero worship, information hoarding.",l3:"Extreme ownership is the norm; feedback flows both ways; selling is authentic — no tricks.",l5:"Purpose is the fuel; the culture develops leaders faster than the org can absorb them."},
+  {c:"Are values embedded in how work actually runs?",l1:"Values live on a poster; comp rewards exactly what the values condemn.",l3:"Incentives and promotion visibly reward team play, customer outcomes, and skill growth.",l5:"The culture self-corrects: incentive drift is flagged and fixed without escalation."},
+  {c:"Is the human system measured as seriously as the revenue system?",l1:"The only people-metric is quota attainment.",l3:"Engagement, mobility, skill progression, and burnout indicators reviewed like pipeline.",l5:"Coaching investment provably moves win rates; leadership attention follows the data."}]];
+const PILLARS=["Vision","Language","Process","Rhythm","Culture"];
+const DIMS=["People","Process","Data"];
+const PAGES={Language:"../language/",Process:"../process/"};
+// which free instrument addresses each pillar's gaps
+const REMEDY={
+ Vision:{t:"The maturity model & Vision workbook",u:"../#open",d:"Turn the ambition into a written Where-to-Play / How-to-Win with an inspectable target."},
+ Language:{t:"The Commercial Dictionary",u:"../language/",d:"One page that ends the mutual mystification behind unreliable forecasts."},
+ Process:{t:"The Play Cards & Process toolkit",u:"../process/",d:"Get your best rep's way of working out of their head and into a team standard."},
+ Rhythm:{t:"Rhythm (shipping soon)",u:"../#schedule",d:"The cadence stack that keeps the engine honest between quarter ends."},
+ Culture:{t:"Culture (shipping soon)",u:"../#schedule",d:"Measuring and building the human system as seriously as the revenue system."}
+};
+
+const answers=new Array(15).fill(null);
+let cur=0;
+
+function esc(s){return s;}
+function renderQ(){
+  const c=CELLS[cur];
+  const pillar=PILLARS[Math.floor(cur/3)], dim=DIMS[cur%3];
+  document.getElementById('pmeta-pillar').textContent=pillar+" \u00D7 "+dim;
+  document.getElementById('pmeta-count').textContent=(cur+1)+" / 15";
+  document.getElementById('pfill').style.width=((cur)/15*100)+"%";
+  const opts=[
+    {v:1,lt:"Chaotic",tx:c.l1},
+    {v:2,lt:"",tx:"&mdash; somewhere between &mdash;",between:true},
+    {v:3,lt:"Defined",tx:c.l3},
+    {v:4,lt:"",tx:"&mdash; somewhere between &mdash;",between:true},
+    {v:5,lt:"Engineered",tx:c.l5}
+  ];
+  let h='<p class="pill">'+pillar+' \u00D7 '+dim+'</p><h2>'+c.c+'</h2><div class="levels-q">';
+  opts.forEach(o=>{
+    if(o.between){
+      h+='<button class="lvlopt" data-v="'+o.v+'"><span class="lv">'+o.v+'</span><span class="between">'+o.tx+'</span></button>';
+    } else {
+      h+='<button class="lvlopt" data-v="'+o.v+'"><span class="lv">'+o.v+'</span><span class="lt">'+o.lt+'</span><span class="lt-tx">'+o.tx+'</span></button>';
+    }
+  });
+  h+='</div>';
+  const qc=document.getElementById('qcard');
+  qc.innerHTML=h;
+  qc.querySelectorAll('.lvlopt').forEach(b=>{
+    if(answers[cur]==+b.dataset.v) b.classList.add('sel');
+    b.addEventListener('click',()=>{
+      answers[cur]=+b.dataset.v;
+      qc.querySelectorAll('.lvlopt').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel');
+      document.getElementById('nextbtn').disabled=false;
+    });
+  });
+  document.getElementById('backbtn').disabled=(cur===0);
+  document.getElementById('nextbtn').disabled=(answers[cur]==null);
+  document.getElementById('nextbtn').textContent = cur===14 ? "See my results \u2192" : "Next \u2192";
+}
+function start(){document.getElementById('intro').style.display='none';document.getElementById('flow').style.display='block';cur=0;renderQ();window.scrollTo(0,0);}
+function next(){ if(answers[cur]==null) return; if(cur===14){showResult();return;} cur++;renderQ();window.scrollTo(0,0);}
+function back(){ if(cur>0){cur--;renderQ();window.scrollTo(0,0);} }
+function restart(){answers.fill(null);document.getElementById('result').classList.remove('on');document.getElementById('flow').style.display='none';document.getElementById('intro').style.display='block';window.scrollTo(0,0);}
+
+function amber(v){ // 1..5 -> pale to deep amber
+  const stops=["#F3E7D2","#EBCB94","#E3AE56","#E8961E","#C87A0E"];
+  return stops[v-1];
+}
+function showResult(){
+  document.getElementById('flow').style.display='none';
+  const res=document.getElementById('result'); res.classList.add('on');
+  const total=answers.reduce((a,b)=>a+b,0);
+  document.getElementById('totalScore').textContent=total;
+  let stage,head,body;
+  if(total<=30){stage="Running on luck";head="Your growth depends on heroes, not a system.";body="Most cells sit at the chaotic end. That's not a failing \u2014 it's the honest starting point almost every organization begins from. The upside: the first few deliberate moves produce visible change fast, because there's no system to fight.";}
+  else if(total<=52){stage="Defined, not yet engineered";head="You've documented more than you enforce.";body="The bones are there \u2014 definitions, some process, named owners \u2014 but they bend under pressure, especially at quarter end. The work now is enforcement: making the system self-correcting rather than dependent on who's in the room.";}
+  else{stage="Engineered";head="You run a system, not a scramble.";body="Rare air. The pattern from here is marginal gains \u2014 the lowest cells below are where a small, deliberate move still compounds. Protect the rhythm and the culture; those are what erode first when growth accelerates.";}
+  document.getElementById('stageLabel').textContent=stage;
+  document.getElementById('verdictHead').textContent=head;
+  document.getElementById('verdictBody').textContent=body;
+
+  // grid
+  let g='<div></div>'+DIMS.map(d=>'<div class="h">'+d+'</div>').join('');
+  PILLARS.forEach((p,pi)=>{
+    g+='<div class="rl">'+p+'</div>';
+    for(let di=0;di<3;di++){const v=answers[pi*3+di];g+='<div class="rcell" style="background:'+amber(v)+';color:'+(v>=4?'#fff':'#3A2A0A')+'">'+v+'</div>';}
+  });
+  document.getElementById('rgrid').innerHTML=g;
+
+  // pillar bars
+  let pb='';
+  PILLARS.forEach((p,pi)=>{
+    const s=answers[pi*3]+answers[pi*3+1]+answers[pi*3+2];
+    pb+='<div class="pbrow"><span class="nm">'+p+'</span><div class="track"><div class="trackf" style="width:'+(s/15*100)+'%"></div></div><span class="sc">'+s+'/15</span></div>';
+  });
+  document.getElementById('pillarbars').innerHTML=pb;
+
+  // three lowest cells -> wins
+  const idx=answers.map((v,i)=>({v,i})).sort((a,b)=>a.v-b.v||a.i-b.i).slice(0,3);
+  let w='';
+  idx.forEach(o=>{
+    const p=PILLARS[Math.floor(o.i/3)],d=DIMS[o.i%3],c=CELLS[o.i],r=REMEDY[p];
+    w+='<div class="win"><span class="wtag">'+p+' \u00D7 '+d+' \u00b7 scored '+o.v+'/5</span>'+
+       '<h3>'+c.c+'</h3>'+
+       '<p>Today: '+(o.v<=2?c.l1:c.l3)+'<br><b>Toward a 5:</b> '+c.l5+'</p>'+
+       '<a href="'+r.u+'">\u2192 '+r.t+'</a></div>';
+  });
+  document.getElementById('wins').innerHTML=w;
+  document.getElementById('pfill').style.width="100%";
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
 
