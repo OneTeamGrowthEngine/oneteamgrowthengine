@@ -189,6 +189,15 @@
   .qinstruct{font-size:13px;color:var(--slate);margin:0 0 18px;font-style:italic}
   .lvlopt .lt-tx{line-height:1.5}
 .scalekey{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 4px}.scalekey>div{background:var(--paper);border:1.5px solid var(--line);border-radius:var(--radius);padding:12px}.scalekey .k{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}.scalekey p{font-size:12.5px;color:var(--slate);margin:0;line-height:1.4}@media(max-width:620px){.scalekey{grid-template-columns:1fr}}
+
+  .sharebox{border:1.5px solid var(--line);border-radius:var(--radius);background:var(--white);padding:22px 24px;margin-top:26px}
+  .sharebox .sharehead{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:17px;color:var(--ink);margin:0}
+  .sharebox .sharesub{font-size:14px;color:var(--slate);margin:4px 0 16px}
+  .sharebtns{display:flex;gap:10px;flex-wrap:wrap}
+  .sharebtn{display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:14px;padding:10px 16px;border-radius:var(--radius);border:1.5px solid var(--line);background:var(--paper);color:var(--ink);text-decoration:none;cursor:pointer;transition:border-color .12s,background .12s}
+  .sharebtn:hover{border-color:var(--amber)}
+  .sharebtn:focus-visible{outline:3px solid var(--amber);outline-offset:1px}
+  .sharebtn .si{font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--amber);font-size:13px}
 </style>
 </head>
 <body>
@@ -256,6 +265,19 @@
       <h2 style="font-family:'Space Grotesk';font-size:22px;margin:30px 0 4px">Your three fastest wins</h2>
       <p style="color:var(--slate);font-size:14px;margin-bottom:10px">The lowest-scoring cells &mdash; where a small, deliberate move changes the most. Each links to the free instrument that addresses it.</p>
       <div class="wins" id="wins"></div>
+
+      <div class="sharebox">
+        <p class="sharehead">Know a leader who should see their own map?</p>
+        <p class="sharesub">Send them the scan &mdash; not your score. Ten minutes, free, no sign-up.</p>
+        <div class="sharebtns">
+          <a class="sharebtn" id="shareLinkedIn" href="#" target="_blank" rel="noopener">
+            <span class="si">in</span> Share on LinkedIn</a>
+          <a class="sharebtn" id="shareMail" href="#">
+            <span class="si">@</span> Share by email</a>
+          <button class="sharebtn" id="shareCopy" type="button">
+            <span class="si">&#128279;</span> <span id="copyLabel">Copy link</span></button>
+        </div>
+      </div>
 
       <div class="cta-final">
         <h2>Turn the map into movement</h2>
@@ -408,7 +430,29 @@ function showResult(){
   });
   document.getElementById('wins').innerHTML=w;
   document.getElementById('pfill').style.width="100%";
+  wireShare();
   window.scrollTo(0,0);
+}
+function wireShare(){
+  const url="https://oneteamgrowthengine.com/scan/";
+  const subject="Score your commercial organization \u2014 the OTGE Scan";
+  const blurb="I came across this: a free 10-minute self-scan that maps your commercial organization across five pillars \u2014 vision, language, process, rhythm, culture. No sign-up. Worth a look:";
+  const li=document.getElementById('shareLinkedIn');
+  if(li) li.href="https://www.linkedin.com/sharing/share-offsite/?url="+encodeURIComponent(url);
+  const ml=document.getElementById('shareMail');
+  if(ml) ml.href="mailto:?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(blurb+"\n\n"+url);
+  const cp=document.getElementById('shareCopy');
+  if(cp) cp.onclick=function(){
+    const done=()=>{const l=document.getElementById('copyLabel');const o=l.textContent;l.textContent="Copied \u2713";setTimeout(()=>l.textContent=o,1800);};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done).catch(()=>fallbackCopy(url,done));}
+    else fallbackCopy(url,done);
+  };
+}
+function fallbackCopy(text,cb){
+  const t=document.createElement('textarea');t.value=text;t.style.position='fixed';t.style.opacity='0';
+  document.body.appendChild(t);t.focus();t.select();
+  try{document.execCommand('copy');}catch(e){}
+  document.body.removeChild(t);cb&&cb();
 }
 </script>
 </body>
